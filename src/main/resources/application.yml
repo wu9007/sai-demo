@@ -13,13 +13,15 @@ spring:
         dimensions: 1024
         max-document-batch-size: 10000
     ollama:
+      base-url: http://localhost:11434
       init:
         pull-model-strategy: never
         timeout: 5m
         max-retries: 0
-      base-url: http://localhost:11434
-      chat:
-        model: llama3.2
+        chat:
+          additional-models:
+            - qwen3:4b
+            - gemma3:4b
       embedding:
         model: mxbai-embed-large
 
