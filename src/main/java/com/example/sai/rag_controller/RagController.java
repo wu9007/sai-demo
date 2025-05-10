@@ -50,8 +50,10 @@ public class RagController {
         TokenTextSplitter splitter = new TokenTextSplitter();
         List<Document> splitDocuments = splitter.apply(docsFromPdfWithCatalog);
         for (Document doc : splitDocuments) {
+            // 打印元数据
             System.out.println("Chunk: " + doc.getFormattedContent());
             System.out.println("Metadata: " + doc.getMetadata());
+            // 自定义元数据
             doc.getMetadata().put("author", "9007");
         }
 

@@ -30,6 +30,7 @@ class ChatModelController {
      */
     @GetMapping(path = "/ai/{userInput}", produces = "text/html;charset=UTF-8")
     Flux<String> generation(@PathVariable String userInput) {
+        //TODO chat memory
         return this.chatClient.prompt()
                 .user(userInput)
                 // 动态切换模型
