@@ -1,7 +1,17 @@
 spring:
   application:
     name: sai-demo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sai
+    username: postgres
+    password: root
   ai:
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1024
+        max-document-batch-size: 10000
     ollama:
       init:
         pull-model-strategy: never
