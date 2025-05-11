@@ -1,8 +1,6 @@
 package com.example.sai.model_controller;
 
-import com.example.sai.tool.DateTimeTools;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.Message;
@@ -30,19 +28,13 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 class ChatModelController {
 
     private final ChatClient chatClient;
-    private final ChatMemory chatMemory;
     private final VectorStore vectorStore;
+    private final ChatMemory chatMemory;
 
-    public ChatModelController(ChatClient.Builder chatClientBuilder, ChatMemory chatMemory, VectorStore vectorStore) {
-        MessageChatMemoryAdvisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
-        this.chatClient = chatClientBuilder
-                // chat memory
-                .defaultAdvisors(chatMemoryAdvisor)
-                // 设置默认调用工具
-//                .defaultTools(new DateTimeTools())
-                .build();
-        this.chatMemory = chatMemory;
+    public ChatModelController(ChatClient chatClient, VectorStore vectorStore, ChatMemory chatMemory) {
+        this.chatClient = chatClient;
         this.vectorStore = vectorStore;
+        this.chatMemory = chatMemory;
     }
 
     /**
@@ -65,7 +57,7 @@ class ChatModelController {
                 // 动态切换模型
                 .options(OllamaOptions.builder().model("qwen3:4b").build())
                 // 设置调用工具【使用工具流式输出将会失效】
-                .tools(new DateTimeTools())
+                // .tools(new DateTimeTools())
                 .stream().content();
     }
 

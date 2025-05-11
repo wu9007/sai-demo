@@ -23,10 +23,16 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// 模型
 	implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
+	// rag 文档读取
 	implementation 'org.springframework.ai:spring-ai-pdf-document-reader'
+	// 使用PGVector向量库
 	implementation 'org.springframework.ai:spring-ai-starter-vector-store-pgvector'
+	// 将向量库中查询的数据加入到上下文
 	implementation 'org.springframework.ai:spring-ai-advisors-vector-store'
+	// MCP 客户端
+	implementation 'org.springframework.ai:spring-ai-starter-mcp-client-webflux'
 	implementation 'org.projectlombok:lombok:1.18.22'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
