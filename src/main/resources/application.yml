@@ -30,3 +30,5 @@ spring:
           connections:
             server1:
               url: http://localhost:9000
+        toolcallback:
+          enabled: true

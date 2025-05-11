@@ -56,8 +56,6 @@ class ChatModelController {
                 )
                 // 动态切换模型
                 .options(OllamaOptions.builder().model("qwen3:4b").build())
-                // 设置调用工具【使用工具流式输出将会失效】
-                // .tools(new DateTimeTools())
                 .stream().content();
     }
 
