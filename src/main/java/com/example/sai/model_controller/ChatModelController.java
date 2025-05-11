@@ -1,5 +1,6 @@
 package com.example.sai.model_controller;
 
+import com.example.sai.tool.DateTimeTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
@@ -29,9 +30,13 @@ class ChatModelController {
     private final ChatMemory chatMemory;
 
     public ChatModelController(ChatClient.Builder chatClientBuilder, ChatMemory chatMemory) {
-        // chat memory
         MessageChatMemoryAdvisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
-        this.chatClient = chatClientBuilder.defaultAdvisors(chatMemoryAdvisor).build();
+        this.chatClient = chatClientBuilder
+                // chat memory
+                .defaultAdvisors(chatMemoryAdvisor)
+                // 设置默认调用工具
+                .defaultTools(new DateTimeTools())
+                .build();
         this.chatMemory = chatMemory;
     }
 
@@ -41,11 +46,12 @@ class ChatModelController {
     @GetMapping(path = "/{chatId}/{userInput}", produces = "text/html;charset=UTF-8")
     Flux<String> generation(@PathVariable String chatId, @PathVariable String userInput) {
         return this.chatClient.prompt().user(userInput)
-                // chat memory
+                // chat memory param
                 .advisors(a -> a.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId).param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 100))
                 // 动态切换模型
                 .options(OllamaOptions.builder().model("qwen3:4b").build())
-//                .options(OllamaOptions.builder().model("gemma3:4b").build())
+                // 设置调用工具
+                // .tools(new DateTimeTools())
                 .stream().content();
     }
 
