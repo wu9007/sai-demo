@@ -3,9 +3,12 @@ package com.example.sai.model_controller;
 import com.example.sai.tool.DateTimeTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.ollama.api.OllamaOptions;
+import org.springframework.ai.vectorstore.SearchRequest;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,16 +31,18 @@ class ChatModelController {
 
     private final ChatClient chatClient;
     private final ChatMemory chatMemory;
+    private final VectorStore vectorStore;
 
-    public ChatModelController(ChatClient.Builder chatClientBuilder, ChatMemory chatMemory) {
+    public ChatModelController(ChatClient.Builder chatClientBuilder, ChatMemory chatMemory, VectorStore vectorStore) {
         MessageChatMemoryAdvisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
         this.chatClient = chatClientBuilder
                 // chat memory
                 .defaultAdvisors(chatMemoryAdvisor)
                 // 设置默认调用工具
-                .defaultTools(new DateTimeTools())
+//                .defaultTools(new DateTimeTools())
                 .build();
         this.chatMemory = chatMemory;
+        this.vectorStore = vectorStore;
     }
 
     /**
@@ -45,13 +50,22 @@ class ChatModelController {
      */
     @GetMapping(path = "/{chatId}/{userInput}", produces = "text/html;charset=UTF-8")
     Flux<String> generation(@PathVariable String chatId, @PathVariable String userInput) {
+        var qaAdvisor = QuestionAnswerAdvisor.builder(vectorStore)
+                .searchRequest(SearchRequest.builder().similarityThreshold(0.65d).topK(6).build())
+                .build();
+
         return this.chatClient.prompt().user(userInput)
-                // chat memory param
-                .advisors(a -> a.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId).param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 100))
+                .advisors(advisorSpec -> advisorSpec
+                        // chat memory param
+                        .param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 100)
+                        // response from the vector database appended to the user text to provide context for the AI model
+                        .advisors(qaAdvisor)
+                )
                 // 动态切换模型
                 .options(OllamaOptions.builder().model("qwen3:4b").build())
-                // 设置调用工具
-                // .tools(new DateTimeTools())
+                // 设置调用工具【使用工具流式输出将会失效】
+                .tools(new DateTimeTools())
                 .stream().content();
     }
 
