@@ -1,5 +1,7 @@
 package com.example.sai.report;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,28 +16,24 @@ import java.util.Map;
  * @version 1.0
  * @since 2025/5/12
  */
+@Slf4j
 @RestController
 @RequestMapping("/report")
-public class ReportController {
+@RequiredArgsConstructor
+public class MedicalReportController {
 
-    private final PdfReportParser pdfParser;
+    private final MedicalReportParser medicalReportParser;
     private final MedicalReportExtractor reportExtractor;
-
-    public ReportController(PdfReportParser pdfParser, MedicalReportExtractor reportExtractor) {
-        this.pdfParser = pdfParser;
-        this.reportExtractor = reportExtractor;
-    }
 
     @PostMapping("/upload")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
-        String text = pdfParser.parse(file);
-
+        String text = medicalReportParser.parse(file);
+        log.info("原始识别结果:\n{}", text);
         if (!reportExtractor.isMedicalReport(text)) {
             return ResponseEntity.ok(Map.of("isMedicalReport", false));
         }
 
         Map<String, Object> result = reportExtractor.extractIndicators(text);
-        //TODO 危急值判断
 
         return ResponseEntity.ok(result);
     }

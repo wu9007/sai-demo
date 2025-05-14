@@ -1,10 +1,12 @@
 package com.example.sai.model_controller;
 
+import com.example.sai.tool.DateTimeTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.ollama.api.OllamaOptions;
+import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +33,14 @@ class ChatModelController {
     private final VectorStore vectorStore;
     private final ChatMemory chatMemory;
 
-    public ChatModelController(ChatClient chatClient, VectorStore vectorStore, ChatMemory chatMemory) {
-        this.chatClient = chatClient;
+    public ChatModelController(ChatClient.Builder builder, VectorStore vectorStore, ChatMemory chatMemory, ToolCallbackProvider toolCallbackProvider) {
+        this.chatClient = builder
+                .defaultOptions(OllamaOptions.builder().model("qwen3:4b").build())
+                // 设置MCP调用工具【使用工具流式输出将会失效】
+                .defaultToolCallbacks(toolCallbackProvider)
+                // 设置默认调用工具【使用工具流式输出将会失效】
+                .defaultTools(new DateTimeTools())
+                .build();
         this.vectorStore = vectorStore;
         this.chatMemory = chatMemory;
     }

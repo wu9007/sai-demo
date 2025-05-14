@@ -18,12 +18,12 @@ spring:
         pull-model-strategy: never
         timeout: 5m
         max-retries: 0
+        chat:
+          additional-models:
+            - qwen3:4b
+            - gemma3:4b
       embedding:
         model: mxbai-embed-large
-      chat:
-        model: qwen3:4b
-        options:
-          model: gemma3:4b
     mcp:
       client:
         sse:
@@ -32,3 +32,7 @@ spring:
               url: http://localhost:9000
         toolcallback:
           enabled: true
+
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor: DEBUG
