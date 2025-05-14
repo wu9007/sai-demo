@@ -1,9 +1,9 @@
 package com.example.sai.report;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeType;
@@ -20,10 +20,15 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class MedicalReportParser {
 
     private final ChatClient chatClient;
+
+    public MedicalReportParser(ChatClient.Builder builder) {
+        this.chatClient = builder
+                .defaultOptions(OllamaOptions.builder().model("llava:7b").build())
+                .build();
+    }
 
     public String parse(MultipartFile file) {
         try {
