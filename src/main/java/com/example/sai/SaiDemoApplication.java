@@ -19,12 +19,9 @@ public class SaiDemoApplication {
     }
 
     @Bean
-    ChatClient chatClient(ChatMemory chatMemory, ChatClient.Builder chatClientBuilder) {
-        MessageChatMemoryAdvisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
+    ChatClient chatClient(ChatClient.Builder chatClientBuilder) {
         return chatClientBuilder
                 .defaultOptions(OllamaOptions.builder().model("gemma3:4b").build())
-                // chat memory
-                .defaultAdvisors(chatMemoryAdvisor)
                 .build();
     }
 }

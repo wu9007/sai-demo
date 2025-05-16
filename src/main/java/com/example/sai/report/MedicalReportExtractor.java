@@ -27,7 +27,10 @@ public class MedicalReportExtractor {
     public boolean isMedicalReport(String text) {
         log.info("check medical report.");
         String prompt = "你将收到一段文本，请判断它是否属于医学检验或检查类报告（如血常规、生化、心电图、CT等），如果是，回答“Y”；否则回答“N”。\n文本内容：";
-        String result = medicalChatClient.prompt().user(prompt + "\n" + text).call().content().trim();
+        String result = medicalChatClient.prompt()
+                .user(prompt + "\n" + text)
+                .advisors(new SimpleLoggerAdvisor())
+                .call().content().trim();
         return result.startsWith("Y");
     }
 

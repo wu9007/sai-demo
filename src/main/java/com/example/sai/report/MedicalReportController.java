@@ -28,7 +28,6 @@ public class MedicalReportController {
     @PostMapping("/upload")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
         String text = medicalReportParser.parse(file);
-        log.info("原始识别结果:\n{}", text);
         if (!reportExtractor.isMedicalReport(text)) {
             return ResponseEntity.ok(Map.of("isMedicalReport", false));
         }
