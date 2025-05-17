@@ -1,4 +1,4 @@
-package com.example.sai.report;
+package org.chuan.sai.reportinterpret.core;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,7 +19,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MedicalReportExtractor {
+public class IndicatorExtractor {
 
     private final ChatClient medicalChatClient;
     private final ObjectMapper objectMapper;

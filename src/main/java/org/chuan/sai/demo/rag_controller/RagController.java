@@ -1,4 +1,4 @@
-package com.example.sai.rag_controller;
+package org.chuan.sai.demo.rag_controller;
 
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.ExtractedTextFormatter;

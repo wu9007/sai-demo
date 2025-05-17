@@ -1,4 +1,4 @@
-package com.example.sai.model_controller;
+package org.chuan.sai.demo.model_controller;
 
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.embedding.EmbeddingResponse;

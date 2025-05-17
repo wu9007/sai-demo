@@ -1,4 +1,4 @@
-package com.example.sai.tool;
+package org.chuan.sai.tool;
 
 /**
  * @author chuan

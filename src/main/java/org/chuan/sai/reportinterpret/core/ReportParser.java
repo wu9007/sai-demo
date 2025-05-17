@@ -1,4 +1,4 @@
-package com.example.sai.report;
+package org.chuan.sai.reportinterpret.core;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-public class MedicalReportParser {
+public class ReportParser {
 
     private final ChatClient chatClient;
 
-    public MedicalReportParser(ChatClient.Builder builder) {
+    public ReportParser(ChatClient.Builder builder) {
         this.chatClient = builder
                 .defaultOptions(OllamaOptions.builder().model("minicpm-v").build())
                 .build();
@@ -54,7 +54,7 @@ public class MedicalReportParser {
         PagePdfDocumentReader reader = new PagePdfDocumentReader(file.getResource());
         return reader.get().stream()
                 .map(Document::getText)
-                .map(MedicalReportParser::clean)
+                .map(ReportParser::clean)
                 .collect(Collectors.joining("\n"));
     }
 

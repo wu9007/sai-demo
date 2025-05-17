@@ -1,4 +1,4 @@
-package com.example.sai;
+package org.chuan.sai;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

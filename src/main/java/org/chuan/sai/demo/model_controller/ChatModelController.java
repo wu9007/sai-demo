@@ -1,6 +1,6 @@
-package com.example.sai.model_controller;
+package org.chuan.sai.demo.model_controller;
 
-import com.example.sai.tool.DateTimeTools;
+import org.chuan.sai.tool.DateTimeTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
