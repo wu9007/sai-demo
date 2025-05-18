@@ -32,7 +32,6 @@ public class MedPromptProvider {
                   "指标名称1": {
                     "值": "xxx",
                     "单位": "xxx",
-                    "是否异常": true/false,
                     "参考范围": "x - y 单位"
                   },
                   ...
@@ -69,6 +68,7 @@ public class MedPromptProvider {
 
                 {
                   "指标名称1": {
+                    "是否异常": true/false,
                     "临床解释": "……",
                     "专业解释": "……",
                     "相关症状": ["头晕", "乏力"]

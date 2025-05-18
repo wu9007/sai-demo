@@ -17,21 +17,24 @@ create table med_report_info
     symptom       varchar(500),
     create_time   timestamp     not null,
     alter_time    timestamp     not null,
-    file_path     varchar(225)  not null,
-    interpret     varchar(2000) not null
+    file_path     varchar(225)  not null
 );
 
-comment on column med_report_info.med_report_id is '主键';
+comment
+on column med_report_info.med_report_id is ''主键'';
 
-comment on column med_report_info.indicator is '原始指标';
+comment
+on column med_report_info.indicator is ''原始指标'';
 
-comment on column med_report_info.symptom is '推断症状';
+comment
+on column med_report_info.symptom is ''推断症状'';
 
-comment on column med_report_info.create_time is '创建时间';
+comment
+on column med_report_info.create_time is ''创建时间'';
 
-comment on column med_report_info.alter_time is '末次调整时间';
+comment
+on column med_report_info.alter_time is ''末次调整时间'';
 
-comment on column med_report_info.file_path is '原始文件路径';
-
-comment on column med_report_info.interpret is '解读内容';
+comment
+on column med_report_info.file_path is ''原始文件路径'';
 

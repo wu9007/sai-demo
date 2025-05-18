@@ -69,7 +69,6 @@ public class MedReportInfoServiceImpl implements MedReportInfoService {
         //构件对象
         MedReportInfoDto reportInfoDto = MedReportInfoDto.builder()
                 .indicator(indicators)
-                .interpret(interprets)
                 .symptom(symptom)
                 .filePath("D:/reports/")
                 .createTime(LocalDateTime.now())
