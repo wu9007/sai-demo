@@ -25,6 +25,8 @@ public class MedReportInfoDto implements Serializable {
 
     private Map<String, Map<String, Object>> indicator;
 
+    private Map<String, Map<String, Object>> interpret;
+
     private List<String> symptom;
 
     private LocalDateTime createTime;

@@ -25,7 +25,10 @@ public class MedReportInfoDo implements Serializable {
     private String medReportId;
 
     @TableField(typeHandler = JacksonTypeHandler.class)
-    private Map<String, Object> indicator;
+    private Map<String, Map<String, Object>> indicator;
+
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private Map<String, Map<String, Object>> interpret;
 
     @TableField(typeHandler = JacksonTypeHandler.class)
     private List<String> symptom;

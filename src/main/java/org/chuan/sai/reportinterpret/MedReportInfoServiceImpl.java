@@ -4,17 +4,19 @@ import lombok.RequiredArgsConstructor;
 import org.chuan.sai.reportinterpret.core.IndicatorExtractor;
 import org.chuan.sai.reportinterpret.core.ReportParser;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author chuan
@@ -52,29 +54,40 @@ public class MedReportInfoServiceImpl implements MedReportInfoService {
     }
 
     @Override
-    public void confirm(Map<String, Map<String, Object>> indicators) {
+    public Map<String, Map<String, Object>> confirm(Map<String, Map<String, Object>> indicators) {
         //指标解读
-        Map<String, Map<String, Object>> interpret = reportExtractor.indicatorsInterpret(indicators);
-        for (Map.Entry<String, Map<String, Object>> item : interpret.entrySet()) {
-            String key = item.getKey();
-            Map<String, Object> value = item.getValue();
-            Map<String, Object> indicator = indicators.get(key);
-            value.putAll(indicator);
-        }
-        //TODO 提取解读中的“相关症状”
-        List<String> symptom = new ArrayList<>();
+        Map<String, Map<String, Object>> interprets = reportExtractor.indicatorsInterpret(indicators);
+        // 提取“相关症状”并去重
+        List<String> symptom = interprets.values().stream()
+                .map(m -> m.get("相关症状"))
+                .filter(Objects::nonNull)
+                .flatMap(v -> v instanceof Collection ? ((Collection<?>) v).stream() : Stream.of(v))
+                .filter(String.class::isInstance)
+                .map(String.class::cast)
+                .distinct()
+                .collect(Collectors.toList());
+        //构件对象
         MedReportInfoDto reportInfoDto = MedReportInfoDto.builder()
-                .indicator(interpret)
+                .indicator(indicators)
+                .interpret(interprets)
                 .symptom(symptom)
                 .filePath("D:/reports/")
                 .createTime(LocalDateTime.now())
                 .alterTime(LocalDateTime.now())
                 .build();
         MedReportInfoDo medReportInfoDo = medReportInfoConverter.toEntity(reportInfoDto);
+        //更新或保存
         if (StringUtils.hasLength(medReportInfoDo.getMedReportId())) {
             medReportInfoMapper.updateById(medReportInfoDo);
         } else {
             medReportInfoMapper.insert(medReportInfoDo);
         }
+        //合并
+        Map<String, Map<String, Object>> result = new HashMap<>(indicators);
+        interprets.forEach((key, value) -> {
+            Map<String, Object> indicator = result.get(key);
+            indicator.putAll(value);
+        });
+        return result;
     }
 }

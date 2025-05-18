@@ -36,8 +36,8 @@ public class InterpretController {
     }
 
     @PostMapping("/confirm")
-    public ResponseEntity<?> save(@RequestBody Map<String, Object> interpret) {
-        medReportInfoService.confirm(interpret);
-        return ResponseEntity.ok(interpret);
+    public ResponseEntity<?> save(@RequestBody Map<String, Map<String, Object>> interpret) {
+        Map<String, Map<String, Object>> confirm = medReportInfoService.confirm(interpret);
+        return ResponseEntity.ok(confirm);
     }
 }

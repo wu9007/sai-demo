@@ -13,5 +13,5 @@ public interface MedReportInfoService {
 
     Map<String, Object> extract(MultipartFile file);
 
-    void confirm(Map<String, Map<String, Object>> interpret);
+    Map<String, Map<String, Object>> confirm(Map<String, Map<String, Object>> interpret);
 }
