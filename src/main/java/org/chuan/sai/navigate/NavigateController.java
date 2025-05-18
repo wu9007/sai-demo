@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class NavigateController {
 
+    private final MedicalNavigationService medicalNavigationService;
+
     @GetMapping
     public ResponseEntity<?> navigate(@RequestParam String symptom) {
-        return ResponseEntity.ok("TODO");
+        NavigationResultDto navigate = medicalNavigationService.navigate(symptom);
+        return ResponseEntity.ok(navigate);
     }
 }
