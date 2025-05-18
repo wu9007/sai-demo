@@ -1,4 +1,4 @@
-package org.chuan.sai.reportinterpret.core;
+package org.chuan.sai;
 
 import org.springframework.stereotype.Component;
 
@@ -86,6 +86,37 @@ public class MedPromptProvider {
                 %s
                 ---
                 """.formatted(indicatorJson);
+    }
+
+    /**
+     * 就医导航提示语：根据症状和指标推荐就诊科室和建议（输出格式为结构化 JSON）
+     */
+    public String navigatePrompt(String symptomList, String indicatorJson) {
+        return """
+                你是一名经验丰富的临床医生，请根据以下患者信息，提供就医导航建议。
+
+                【患者症状】
+                %s
+
+                【检验指标】
+                %s
+
+                请结合症状和指标，输出以下内容，并使用结构化 JSON 格式，字段如下：
+
+                {
+                  "推荐科室": "如 内分泌科",
+                  "初步判断": "如 可能存在甲状腺功能异常",
+                  "就医建议": "如 建议一周内前往医院内分泌科门诊进一步检查",
+                  "就医前需要携带的资料": "如 近期检验报告、既往病历、用药记录"
+                }
+
+                要求：
+                - 推荐科室尽量具体（如“神经内科”、“内分泌科”等）；
+                - 初步判断为可能疾病方向或临床问题，不作确诊；
+                - 就医建议要说明是否需要尽快就诊，是否建议进一步检查；
+                - 携带资料包括：体检报告、既往病历、用药清单、影像资料等；
+                - 所有字段必须完整填写，回答内容为简洁中文。
+                """.formatted(symptomList, indicatorJson);
     }
 }
 
