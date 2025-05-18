@@ -1,6 +1,5 @@
 package org.chuan.sai.reportinterpret;
 
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
@@ -14,5 +13,5 @@ public interface MedReportInfoService {
 
     Map<String, Object> extract(MultipartFile file);
 
-    void confirm(MultipartFile file, @RequestBody Map<String, Object> interpret);
+    void confirm(Map<String, Map<String, Object>> interpret);
 }

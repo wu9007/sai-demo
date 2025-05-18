@@ -1,5 +1,6 @@
-package org.chuan;
+package org.chuan.sai;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.boot.SpringApplication;

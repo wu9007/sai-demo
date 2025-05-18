@@ -35,13 +35,13 @@ dependencies {
 	implementation 'org.springframework.ai:spring-ai-starter-mcp-client-webflux'
 
 	implementation 'org.postgresql:postgresql:42.7.3'
-	implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.5'
-	implementation 'org.flywaydb:flyway-core'
-	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    implementation 'com.baomidou:mybatis-plus-spring-boot3-starter:3.5.12'
 
+	//依赖顺序确实很关键！Lombok必须放在MapStruct之前，这样MapStruct才能识别Lombok生成的getter/setter方法，否则映射实现会空。
 	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

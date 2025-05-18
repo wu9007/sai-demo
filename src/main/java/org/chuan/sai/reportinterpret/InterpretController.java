@@ -36,8 +36,8 @@ public class InterpretController {
     }
 
     @PostMapping("/confirm")
-    public ResponseEntity<?> save(@RequestParam("file") MultipartFile file, @RequestBody Map<String, Object> interpret) {
-        medReportInfoService.confirm(file, interpret);
+    public ResponseEntity<?> save(@RequestBody Map<String, Object> interpret) {
+        medReportInfoService.confirm(interpret);
         return ResponseEntity.ok(interpret);
     }
 }

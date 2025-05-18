@@ -1,7 +1,9 @@
 package org.chuan.sai.reportinterpret;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,11 +17,13 @@ import java.util.Map;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MedReportInfoDto implements Serializable {
 
     private String medReportId;
 
-    private Map<String, Object> indicator;
+    private Map<String, Map<String, Object>> indicator;
 
     private List<String> symptom;
 

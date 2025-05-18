@@ -1,8 +1,10 @@
 package org.chuan.sai.reportinterpret;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -22,8 +24,10 @@ public class MedReportInfoDo implements Serializable {
     @TableId(type = IdType.ASSIGN_UUID)
     private String medReportId;
 
+    @TableField(typeHandler = JacksonTypeHandler.class)
     private Map<String, Object> indicator;
 
+    @TableField(typeHandler = JacksonTypeHandler.class)
     private List<String> symptom;
 
     private LocalDateTime createTime;

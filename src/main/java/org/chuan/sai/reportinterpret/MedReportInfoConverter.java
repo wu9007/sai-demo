@@ -1,7 +1,6 @@
 package org.chuan.sai.reportinterpret;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 /**
  * @author chuan
@@ -10,8 +9,6 @@ import org.mapstruct.factory.Mappers;
  */
 @Mapper(componentModel = "spring")
 public interface MedReportInfoConverter {
-
-    MedReportInfoConverter INSTANCE = Mappers.getMapper(MedReportInfoConverter.class);
 
     /**
      * 转换
