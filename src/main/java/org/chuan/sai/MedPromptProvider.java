@@ -51,9 +51,6 @@ public class MedPromptProvider {
     }
 
     /**
-     * 指标解读 Prompt：根据结构化指标进行详细解释
-     */
-    /**
      * 指标解读 Prompt：根据结构化指标进行详细解释，并提取可能出现的症状
      */
     public String interpretIndicatorsPrompt(String indicatorJson) {
@@ -101,13 +98,13 @@ public class MedPromptProvider {
                 【检验指标】
                 %s
 
-                请结合症状和指标，输出以下内容，并使用结构化 JSON 格式，字段如下：
+                请结合症状（高优先级）和指标（低优先级），输出以下内容，并使用结构化 JSON 格式，字段如下：
 
                 {
-                  "推荐科室": "如 内分泌科",
-                  "初步判断": "如 可能存在甲状腺功能异常",
-                  "就医建议": "如 建议一周内前往医院内分泌科门诊进一步检查",
-                  "就医前需要携带的资料": "如 近期检验报告、既往病历、用药记录"
+                  "recommendedDepartment": "如 内分泌科",
+                  "preliminaryAssessment": "如 可能存在甲状腺功能异常",
+                  "suggestion": "如 建议一周内前往医院内分泌科门诊进一步检查",
+                  "requiredDocuments": "如 近期检验报告、既往病历、用药记录"
                 }
 
                 要求：

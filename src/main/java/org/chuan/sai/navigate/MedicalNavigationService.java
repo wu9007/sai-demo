@@ -1,11 +1,20 @@
 package org.chuan.sai.navigate;
 
+import java.util.List;
+
 /**
  * @author chuan
  * @version 1.0
  * @since 2025/5/18
  */
 public interface MedicalNavigationService {
+
+    /**
+     * 获取症状
+     *
+     * @return 症状
+     */
+    List<String> getSymptoms();
 
     /**
      * 根据症状和指标生成就医建议
