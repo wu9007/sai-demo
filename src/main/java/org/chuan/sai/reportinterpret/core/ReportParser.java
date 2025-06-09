@@ -60,8 +60,9 @@ public class ReportParser {
 
     private String parseImage(MultipartFile file) {
         String prompt = """
-                提取图片上的文字
-                """;
+        请提取图片上的所有文字。图片中的文字可能有不同的格式、大小和字体，请确保识别每一行文字，并以结构化的方式输出。
+        提取的文本需要按原格式返回，不要添加其他信息或对格式进行修改。请忽略图片中的图像或非文本部分。
+        """;
 
         MimeType mimeType = MimeTypeUtils.parseMimeType(file.getContentType());
         String response = chatClient.prompt()
