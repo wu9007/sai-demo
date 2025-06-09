@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/sai
     username: postgres
-    password: root
+    password: 123123
   ai:
     vectorstore:
       pgvector:
@@ -20,9 +20,9 @@ spring:
         max-retries: 0
         chat:
           additional-models:
-            - qwen3:4b
-            - gemma3:4b
-            - minicpm-v
+            - qwen3:8b
+            - gemma3:12b
+            - minicpm-v:8b
       embedding:
         model: mxbai-embed-large
     mcp:

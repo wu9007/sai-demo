@@ -27,7 +27,7 @@ public class ReportParser {
 
     public ReportParser(ChatClient.Builder builder) {
         this.chatClient = builder
-                .defaultOptions(OllamaOptions.builder().model("minicpm-v").build())
+                .defaultOptions(OllamaOptions.builder().model("minicpm-v:8b").build())
                 .build();
     }
 

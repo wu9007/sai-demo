@@ -1,6 +1,5 @@
 package org.chuan.sai;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +19,7 @@ public class SaiDemoApplication {
     @Bean
     ChatClient chatClient(ChatClient.Builder chatClientBuilder) {
         return chatClientBuilder
-                .defaultOptions(OllamaOptions.builder().model("gemma3:4b").build())
+                .defaultOptions(OllamaOptions.builder().model("gemma3:12b").build())
                 .build();
     }
 }
